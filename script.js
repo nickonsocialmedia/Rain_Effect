@@ -30,7 +30,7 @@ function updateRaindrops() {
     const drop = drops[i];
     drop.y += drop.speed;
 
-    // reset drop
+    // Reset Drop When It Leaves The Screen
     if (drop.y - drop.length > canvas.height) {
       drops[i] = createRaindrop();
     }
