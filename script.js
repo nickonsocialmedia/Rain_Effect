@@ -12,6 +12,7 @@ function createRaindrop() {
     y: Math.random() * canvas.height,
     length: Math.random() * 20 + 5,
     speed: Math.random() * 10 + 5,
+    color: getRandomNeonColor(),
   };
 }
 
@@ -19,7 +20,7 @@ function drawRaindrop(drop) {
   ctx.beginPath();
   ctx.moveTo(drop.x, drop.y);
   ctx.lineTo(drop.x, drop.y + drop.length);
-  ctx.strokeStyle = 'blue';
+  ctx.strokeStyle = drop.color;
   ctx.lineWidth = 2;
   ctx.stroke();
 }
@@ -29,7 +30,7 @@ function updateRaindrops() {
     const drop = drops[i];
     drop.y += drop.speed;
 
-    // Reset drop when it goes beyond the canvas
+    // reset drop
     if (drop.y - drop.length > canvas.height) {
       drops[i] = createRaindrop();
     }
@@ -47,6 +48,15 @@ function draw() {
   requestAnimationFrame(draw);
 }
 
+function getRandomNeonColor() {
+  const letters = '0123456789ABCDEF';
+  let color = '#';
+  for (let i = 0; i < 6; i++) {
+    color += letters[Math.floor(Math.random() * 16)];
+  }
+  return color;
+}
+
 // Create initial raindrops
 for (let i = 0; i < 100; i++) {
   drops.push(createRaindrop());
@@ -54,3 +64,11 @@ for (let i = 0; i < 100; i++) {
 
 // Start animation loop
 draw();
+
+// Background color transition
+function transitionBackgroundColor() {
+  document.body.style.transition = 'background-color 10s linear';
+  document.body.style.backgroundColor = getRandomNeonColor();
+}
+
+setInterval(transitionBackgroundColor, 10000); // 10000 = 10 secs
